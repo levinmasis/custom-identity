@@ -1,0 +1,104 @@
+﻿@using Microsoft.AspNetCore.Identity;
+@using custom_identity.Data.Entities;
+@using custom_identity.Models.Partials;
+
+@inject SignInManager<User> SignInManager
+@{
+    ViewData["Title"] = "Manage";
+    var hasExternalLogins = (await SignInManager.GetExternalAuthenticationSchemesAsync()).Any();
+
+    var profileModel = new ProfilePartialModel() {  };
+    var emailModel = new EmailPartialModel() { };
+    var changePasswordModel = new ChangePasswordPartialModel() { };
+}
+
+<div class="d-flex align-items-start">
+    <div class="nav flex-column nav-pills me-3" id="v-pills-tab" role="tablist" aria-orientation="vertical">
+        <button class="nav-link active" 
+                id="v-pills-profile-tab" 
+                data-bs-toggle="pill" 
+                data-bs-target="#v-pills-profile" 
+                type="button" role="tab" 
+                aria-controls="v-pills-profile" 
+                aria-selected="true">
+                    Profile
+        </button>
+
+        <button class="nav-link" 
+                id="v-pills-email-tab" 
+                data-bs-toggle="pill" 
+                data-bs-target="#v-pills-email" 
+                type="button" role="tab" 
+                aria-controls="v-pills-email" 
+                aria-selected="false">
+                    Email
+        </button>
+
+        <button class="nav-link" 
+                id="v-pills-password-tab" 
+                data-bs-toggle="pill" 
+                data-bs-target="#v-pills-password" 
+                type="button" role="tab" 
+                aria-controls="v-pills-password" 
+                aria-selected="false">
+                    Password
+        </button>
+
+        @if(hasExternalLogins)
+        {
+            <button class="nav-link" 
+                    id="v-pills-external-logins-tab" 
+                    data-bs-toggle="pill" 
+                    data-bs-target="#v-pills-external-logins" 
+                    type="button" role="tab" 
+                    aria-controls="v-pills-external-logins" 
+                    aria-selected="false">
+                        External logins
+            </button>
+        }
+
+        <button class="nav-link" 
+                id="v-pills-two-factor-tab" 
+                data-bs-toggle="pill" 
+                data-bs-target="#v-pills-two-factor" 
+                type="button" role="tab" 
+                aria-controls="v-pills-two-factor" 
+                aria-selected="false">
+                    Two-factor authentication
+        </button>
+
+        <button class="nav-link" 
+                id="v-pills-personal-data-tab"
+                data-bs-toggle="pill" 
+                data-bs-target="#v-pills-personal-data" 
+                type="button" role="tab" 
+                aria-controls="v-pills-personal-data"
+                aria-selected="false">
+                    Personal data
+        </button>
+    </div>
+
+    <div class="tab-content w-100 user" id="v-pills-tabContent">
+        <div class="tab-pane fade show active" id="v-pills-profile" role="tabpanel" aria-labelledby="v-pills-profile-tab">
+            <partial name="Auth/_ProfilePartial" model="@profileModel" />
+        </div>
+        <div class="tab-pane fade" id="v-pills-email" role="tabpanel" aria-labelledby="v-pills-email-tab">
+            <partial name="Auth/_EmailPartial" model="@emailModel" />
+        </div>
+        <div class="tab-pane fade" id="v-pills-password" role="tabpanel" aria-labelledby="v-pills-password-tab">
+            <partial name="Auth/_ChangePasswordPartial" model="@changePasswordModel" />
+        </div>
+        @if(hasExternalLogins)
+        {
+            <div class="tab-pane fade" id="v-pills-external-logins" role="tabpanel" aria-labelledby="v-pills-external-logins-tab">
+
+            </div>
+        }
+        <div class="tab-pane fade" id="v-pills-two-factor" role="tabpanel" aria-labelledby="v-pills-two-factor-tab">
+
+        </div>
+        <div class="tab-pane fade" id="v-pills-personal-data" role="tabpanel" aria-labelledby="v-pills-personal-data-tab">
+            <partial name="Auth/_PersonalDataPartial" />
+        </div>
+    </div>
+</div>

@@ -1,0 +1,34 @@
+﻿@using custom_identity.Models.Partials;
+
+@model DeletePersonalDataPartialModel
+
+@{
+    ViewData["Title"] = "Delete Personal Data";
+    Layout = "_Layout";
+}
+
+<h3>@ViewData["Title"]</h3>
+
+<div class="alert alert-warning" role="alert">
+    <p>
+        <strong>Deleting this data will permanently remove your account, and this cannot be recovered.</strong>
+    </p>
+</div>
+
+<div>
+    <form id="delete-user" class="user" asp-controller="auth" asp-action="deletepersonaldata" method="post">
+        <div asp-validation-summary="ModelOnly" class="text-danger" role="alert"></div>
+        @if (Model.RequirePassword)
+        {
+            <div class="form-group">
+                <input asp-for="Password" 
+                        class="form-control form-control-user" 
+                        autocomplete="current-password" 
+                        aria-required="true" 
+                        placeholder="Please enter your password." />
+                <span asp-validation-for="Password" class="text-danger"></span>
+            </div>
+        }
+        <button class="w-100 btn btn-lg btn-danger" type="submit">Delete data and close my account</button>
+    </form>
+</div>

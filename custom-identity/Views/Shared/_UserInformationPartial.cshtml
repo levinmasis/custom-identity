@@ -1,0 +1,40 @@
+﻿@using Microsoft.AspNetCore.Identity
+@using custom_identity.Data.Entities
+
+@inject SignInManager<User> SignInManager
+@inject UserManager<User> UserManager
+
+
+<ul class="navbar-nav">
+    @if (SignInManager.IsSignedIn(User))
+    {
+        <li class="nav-item dropdown">
+            <a class="nav-link text-dark dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                <span class="mr-2 text-dark">Hello, @User?.Identity?.Name!</span>
+                <img src="~/img/undraw_profile.svg" style="width: 24px; height: 24px">
+            </a>
+            <ul class="dropdown-menu">
+                <li>
+                    <a class="nav-link text-dark" asp-controller="auth" asp-action="manage" title="Profile">
+                        <span class="fa-solid fa-user mr-1"></span>
+                        Profile
+                    </a>
+                </li>
+                <li>
+                    <form class="form-inline" asp-controller="auth" asp-action="logout" asp-route-returnUrl="@Url.Action("Index", "Home")">
+                        <button type="submit" class="nav-link btn btn-link text-dark" title="Logout">
+                            <span class="fa-solid fa-right-from-bracket mr-1"></span>
+                            Logout
+                        </button>
+                    </form>
+                </li>
+            </ul>
+        </li>
+    }
+    else
+    {
+        <li class="nav-item">
+            <a class="nav-link text-dark" asp-controller="auth" asp-action="login">Login</a>
+        </li>
+    }
+</ul>
